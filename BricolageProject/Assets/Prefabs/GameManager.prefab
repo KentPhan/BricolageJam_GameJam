@@ -55,3 +55,5 @@ MonoBehaviour:
   InitialEnemySpawnRate: 5
   SpawnRateSpeedUp: 0.9
   SpawnRateStageTimer: 10
+  WeaponSpawnRate: 10
+  PointsPerKill: 10

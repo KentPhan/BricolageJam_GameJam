@@ -1,9 +1,17 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Assets
 {
+    public enum GameStates
+    {
+        START,
+        PLAY,
+        GAMEOVER
+    }
+
     public class GameManager : MonoBehaviour
     {
         // Prefabs
@@ -32,10 +40,15 @@ namespace Assets
         [SerializeField] private float WeaponSpawnRate = 10.0f;
         private float m_CurrentWeaponSpawnTimer;
 
+        // Score Shit
+        [SerializeField] private int PointsPerKill;
+        private int m_CurrentScore;
+
 
         public static GameManager Instance;
 
         private PlayerScript m_CurrentPlayer;
+        private GameStates m_CurrentGameState;
 
         private Vector2 m_Boundary;
 
@@ -54,9 +67,6 @@ namespace Assets
         // Start is called before the first frame update
         void Start()
         {
-            // Spawn Player Object
-            m_CurrentPlayer = Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
-
             // Boundaries
             m_Boundary = new Vector2(Mathf.Abs(WidthBoundary.transform.position.x), Mathf.Abs((HeightBoundary.transform.position.y)));
 
@@ -67,10 +77,47 @@ namespace Assets
 
             // Weapon Stuff
             m_CurrentWeaponSpawnTimer = WeaponSpawnRate;
+
+            // GameState
+            CanvasManager.Instance.DisplayStart();
+            m_CurrentGameState = GameStates.START;
         }
 
         // Update is called once per frame
         void Update()
+        {
+            switch (m_CurrentGameState)
+            {
+                case GameStates.START:
+                    if (Input.GetButtonDown("Submit"))
+                    {
+                        // Spawn Player Object
+                        m_CurrentPlayer = Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
+                        m_CurrentScore = 0;
+                        CanvasManager.Instance.ResetScore();
+                        CanvasManager.Instance.DisplayPlay();
+                        m_CurrentGameState = GameStates.PLAY;
+                    }
+                    break;
+                case GameStates.PLAY:
+                    {
+                        MainGameLoop();
+                        break;
+                    }
+                case GameStates.GAMEOVER:
+                    if (Input.GetButtonDown("Submit"))
+                    {
+                        // Spawn Player Object
+                        CanvasManager.Instance.DisplayStart();
+                        m_CurrentGameState = GameStates.START;
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void MainGameLoop()
         {
             float m_deltaTime = Time.deltaTime;
 
@@ -114,6 +161,8 @@ namespace Assets
 
         public GameObject GetPlayer()
         {
+            if (m_CurrentPlayer == null)
+                return null;
             return m_CurrentPlayer.gameObject;
         }
 
@@ -127,6 +176,10 @@ namespace Assets
             m_CurrentEnemySpawnTimer = InitialEnemySpawnRate;
             m_CurrentEnemySpawnRate = InitialEnemySpawnRate;
             m_CurrentStageTimer = SpawnRateStageTimer;
+            m_CurrentGameState = GameStates.GAMEOVER;
+            CanvasManager.Instance.DisplayGameOver(m_CurrentScore);
+            m_CurrentScore = 0;
+            CanvasManager.Instance.ResetScore();
         }
 
         public Tuple<Vector2, Vector2> GetRandomSpawnOutsideOfBoundary()
@@ -136,7 +189,6 @@ namespace Assets
             Vector2 l_RandomPosition = Vector2.zero;
             Vector2 l_DirectionTowardsCenter = Vector2.zero;
             int l_side = Random.Range(1, 5);
-            Debug.Log(l_side);
             switch (l_side)
             {
                 case 1:
@@ -161,6 +213,28 @@ namespace Assets
             }
 
             return new Tuple<Vector2, Vector2>(l_RandomPosition, l_DirectionTowardsCenter);
+        }
+
+        public bool IsOutsideBoundaries(Vector2 position)
+        {
+            if (position.x < ((m_Boundary.x * -1) - 10.0f) || position.x > (m_Boundary.x + 10.0f))
+                return true;
+
+            if (position.y < ((m_Boundary.y * -1) - 10.0f) || position.y > (m_Boundary.y + 10.0f))
+                return true;
+
+            return false;
+        }
+
+        public GameStates GetGameState()
+        {
+            return m_CurrentGameState;
+        }
+
+        public void AddToScore()
+        {
+            m_CurrentScore += PointsPerKill;
+            CanvasManager.Instance.SetScore(m_CurrentScore);
         }
     }
 }

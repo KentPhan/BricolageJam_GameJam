@@ -24,9 +24,21 @@ namespace Assets
         // Update is called once per frame
         void Update()
         {
-            GameObject l_Target = GameManager.Instance.GetPlayer();
-            Vector2 l_Direction = (l_Target.GetComponent<Rigidbody2D>().position - m_RigidBody.position).normalized;
-            m_RigidBody.MovePosition(m_RigidBody.position + l_Direction * m_Speed * Time.deltaTime);
+            if (GameManager.Instance.GetGameState() == GameStates.PLAY)
+            {
+                GameObject l_Target = GameManager.Instance.GetPlayer();
+                Vector2 l_Direction = (l_Target.GetComponent<Rigidbody2D>().position - m_RigidBody.position).normalized;
+                m_RigidBody.MovePosition(m_RigidBody.position + l_Direction * m_Speed * Time.deltaTime);
+
+                if (GameManager.Instance.IsOutsideBoundaries(m_RigidBody.position))
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+            else
+            {
+                Die();
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D i_collider)
@@ -35,6 +47,7 @@ namespace Assets
             {
                 if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill)
                 {
+                    GameManager.Instance.AddToScore();
                     Die();
                 }
 

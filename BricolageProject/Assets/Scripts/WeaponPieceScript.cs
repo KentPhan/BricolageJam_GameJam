@@ -34,8 +34,22 @@ namespace Assets
         // Update is called once per frame
         void Update()
         {
-            if (!CanKill && GetComponent<Rigidbody2D>() != null)
-                m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
+            if (GameManager.Instance.GetGameState() == GameStates.PLAY)
+            {
+                if (!CanKill && GetComponent<Rigidbody2D>() != null)
+                {
+                    m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
+
+                    if (GameManager.Instance.IsOutsideBoundaries(m_RigidBody.position))
+                    {
+                        Destroy(this.gameObject);
+                    }
+                }
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
 
         public void SetMawDirectionBaby(Vector2 i_Direction)
