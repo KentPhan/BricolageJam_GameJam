@@ -14,16 +14,14 @@ namespace Assets
 
     public class GameManager : MonoBehaviour
     {
+        // Camera
+        [SerializeField] private Camera TheCamera;
+
         // Prefabs
         [SerializeField] private PlayerScript PlayerPrefab;
         [SerializeField] private GameObject PlayerSpawn;
         [SerializeField] private BasicEnemyScript EnemyPrefab;
         [SerializeField] private WeaponPieceScript WeaponPrefab;
-
-
-        // Boundaries
-        [SerializeField] private GameObject WidthBoundary;
-        [SerializeField] private GameObject HeightBoundary;
 
         // Enemy Stuff
         [SerializeField] private float InitialEnemySpawnRate = 5.0f;
@@ -68,7 +66,8 @@ namespace Assets
         void Start()
         {
             // Boundaries
-            m_Boundary = new Vector2(Mathf.Abs(WidthBoundary.transform.position.x), Mathf.Abs((HeightBoundary.transform.position.y)));
+            Vector3 l_LeftCorner = TheCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+            m_Boundary = new Vector2(Mathf.Abs(l_LeftCorner.x), Mathf.Abs((l_LeftCorner.y)));
 
             // Enemy Stuff
             m_CurrentEnemySpawnTimer = InitialEnemySpawnRate;
