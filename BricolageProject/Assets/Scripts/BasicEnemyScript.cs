@@ -28,14 +28,15 @@ namespace Assets
         public void OnTriggerEnter2D(Collider2D i_collider)
         {
             if (i_collider.gameObject.CompareTag("Weapon"))
-                Destroy(this.gameObject);
+            {
+                if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill)
+                    Destroy(this.gameObject);
+            }
             else if (i_collider.gameObject.CompareTag("Player"))
             {
                 Destroy(i_collider.gameObject);
                 GameManager.Instance.TriggerGameOver();
             }
-
-
         }
     }
 }

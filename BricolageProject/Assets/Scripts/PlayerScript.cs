@@ -43,5 +43,11 @@ namespace Assets
             float l_direction = m_Invert ? -1 : 1;
             m_WeaponCenter.transform.RotateAround(m_WeaponCenter.transform.position, Vector3.forward, l_spin * m_RotationSpeed * l_direction);
         }
+
+
+        public Transform GetWeaponParents()
+        {
+            return m_WeaponCenter.transform;
+        }
     }
 }

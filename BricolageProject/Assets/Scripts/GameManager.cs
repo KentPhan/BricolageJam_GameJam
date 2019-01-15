@@ -27,6 +27,10 @@ namespace Assets
         private float m_CurrentStageTimer;
 
 
+        // Weapon Spawn Stuff
+        [SerializeField] private float WeaponSpawnRate = 10.0f;
+        private float m_CurrentWeaponSpawnTimer;
+
 
         public static GameManager Instance;
 
@@ -59,6 +63,9 @@ namespace Assets
             m_CurrentEnemySpawnTimer = InitialEnemySpawnRate;
             m_CurrentEnemySpawnRate = InitialEnemySpawnRate;
             m_CurrentStageTimer = SpawnRateStageTimer;
+
+            // Weapon Stuff
+            m_CurrentWeaponSpawnTimer = WeaponSpawnRate;
         }
 
         // Update is called once per frame
@@ -77,7 +84,7 @@ namespace Assets
             }
 
 
-            // Stage Adjuster
+            // Stage Enemy Rate Adjuster
             if (m_CurrentStageTimer <= 0)
             {
                 m_CurrentEnemySpawnRate *= SpawnRateSpeedUp;
@@ -87,6 +94,19 @@ namespace Assets
 
             m_CurrentEnemySpawnTimer -= m_deltaTime;
             m_CurrentStageTimer -= m_deltaTime;
+
+
+            // Weapon Spawner
+            if (m_CurrentEnemySpawnTimer <= 0)
+            {
+                Vector2 m_SpawnPosition = new Vector2(0, 0);
+                WeaponPieceScript m_newWeapon = Instantiate(WeaponPrefab, m_SpawnPosition, Quaternion.identity);
+                m_newWeapon.transform.SetParent(this.transform);
+                m_newWeapon.SetMawDirectionBaby(Vector2.down);
+
+                m_CurrentWeaponSpawnTimer = WeaponSpawnRate;
+            }
+            m_CurrentWeaponSpawnTimer -= m_deltaTime;
         }
 
         public GameObject GetPlayer()
