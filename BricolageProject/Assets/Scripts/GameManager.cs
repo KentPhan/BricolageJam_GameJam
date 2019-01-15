@@ -10,8 +10,15 @@ namespace Assets
         [SerializeField] private BasicEnemyScript EnemyPrefab;
         [SerializeField] private WeaponPieceScript WeaponPrefab;
 
+
+        [SerializeField] private GameObject WidthBoundary;
+        [SerializeField] private GameObject HeightBoundary;
+
+
         public static GameManager Instance;
         private PlayerScript m_CurrentPlayer;
+
+        private Vector2 m_Boundary;
 
         public void Awake()
         {
@@ -31,6 +38,8 @@ namespace Assets
             // Spawn Player Object
             m_CurrentPlayer = Instantiate(PlayerPrefab, PlayerSpawn.transform.position, Quaternion.identity);
 
+            // Boundaries
+            m_Boundary = new Vector2(Mathf.Abs(WidthBoundary.transform.position.x), Mathf.Abs((HeightBoundary.transform.position.y)));
         }
 
         // Update is called once per frame
@@ -42,6 +51,11 @@ namespace Assets
         public GameObject GetPlayer()
         {
             return PlayerPrefab.gameObject;
+        }
+
+        public Vector2 GetBoundaries()
+        {
+            return m_Boundary;
         }
     }
 }

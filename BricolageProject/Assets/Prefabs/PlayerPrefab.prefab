@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6183941387826747307}
   - component: {fileID: 5385671633493632283}
   - component: {fileID: 8623608253014324942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,6 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Speed: 10
+  m_RotationSpeed: 5
+  m_Invert: 1
+  m_WeaponCenter: {fileID: 1078675946}
 --- !u!1001 &8222241099447942912
 PrefabInstance:
   m_ObjectHideFlags: 0
