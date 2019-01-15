@@ -5,6 +5,7 @@ namespace Assets
     public class PlayerScript : MonoBehaviour
     {
 
+        [SerializeField] private ParticleSystem ParticleDeathPrefab;
         [SerializeField] private float m_Speed = 10;
         [SerializeField] private float m_RotationSpeed = 5;
         [SerializeField] private bool m_Invert = true;
@@ -48,6 +49,12 @@ namespace Assets
         public Transform GetWeaponParents()
         {
             return m_WeaponCenter.transform;
+        }
+
+        public void Die()
+        {
+            Instantiate(ParticleDeathPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
     }
 }

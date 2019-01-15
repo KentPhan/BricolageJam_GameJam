@@ -4,8 +4,12 @@ namespace Assets
 {
     public class BasicEnemyScript : MonoBehaviour
     {
+        [SerializeField] private ParticleSystem ParticleDeathPrefab;
+
         [SerializeField]
         private float m_Speed;
+
+
 
 
         private Rigidbody2D m_RigidBody;
@@ -30,13 +34,22 @@ namespace Assets
             if (i_collider.gameObject.CompareTag("Weapon"))
             {
                 if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill)
-                    Destroy(this.gameObject);
+                {
+                    Die();
+                }
+
             }
             else if (i_collider.gameObject.CompareTag("Player"))
             {
-                Destroy(i_collider.gameObject);
+                i_collider.gameObject.GetComponent<PlayerScript>().Die();
                 GameManager.Instance.TriggerGameOver();
             }
+        }
+
+        private void Die()
+        {
+            Instantiate(ParticleDeathPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
     }
 }

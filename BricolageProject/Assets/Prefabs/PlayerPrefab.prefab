@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad1eef28c6e78246bdd20acae857e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParticleDeathPrefab: {fileID: 1566066582006431460, guid: 1dc1b39d405d00b46b309d4cfa9b27dc,
+    type: 3}
   m_Speed: 10
   m_RotationSpeed: 5
   m_Invert: 1
