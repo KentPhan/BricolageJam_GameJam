@@ -630,14 +630,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 912883634, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6, type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 912883634, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6, type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1533079696899586671, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -665,6 +657,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1592158533035946143, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6,
         type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 298564857, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6, type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 298564857, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6, type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}

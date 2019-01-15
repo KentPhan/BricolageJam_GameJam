@@ -9,6 +9,7 @@ namespace Assets.Scripts
         [SerializeField] private GameObject PlayScreen;
         [SerializeField] private TextMeshProUGUI ScoreValue;
         [SerializeField] private GameObject GameOverScreen;
+        [SerializeField] private TextMeshProUGUI FinalScoreValue;
 
 
 
@@ -52,6 +53,7 @@ namespace Assets.Scripts
             StartScreen.SetActive(false);
             PlayScreen.SetActive(false);
             GameOverScreen.SetActive(true);
+            FinalScoreValue.text = $"Final Score: {i_FinalScore}";
         }
 
         public void DisplayPlay()
