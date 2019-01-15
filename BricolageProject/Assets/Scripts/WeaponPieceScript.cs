@@ -51,20 +51,23 @@ namespace Assets
         }
 
         public void OnCollisionEnter2D(Collision2D i_collider)
-
         {
-            if (i_collider.gameObject.CompareTag("Weapon"))
-            {
-                WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                if (!l_weapon.CanKill)
-                {
-                    l_weapon.ActivateArms();
-                    l_weapon.gameObject.transform.SetParent(GameManager.Instance.GetPlayer().GetComponent<PlayerScript>().GetWeaponParents());
-                }
-            }
-            else if (i_collider.gameObject.CompareTag("Player"))
-            {
 
+            if (this.transform.parent.name == "WeaponShapes")
+            {
+                if (i_collider.gameObject.CompareTag("Weapon"))
+                {
+                    WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
+                    if (!l_weapon.CanKill)
+                    {
+                        l_weapon.ActivateArms();
+                        l_weapon.gameObject.transform.SetParent(GameManager.Instance.GetPlayer().GetComponent<PlayerScript>().GetWeaponParents());
+                    }
+                }
+                else if (i_collider.gameObject.CompareTag("Player"))
+                {
+
+                }
             }
         }
     }
