@@ -53,7 +53,7 @@ MonoBehaviour:
   WidthBoundary: {fileID: 0}
   HeightBoundary: {fileID: 0}
   InitialEnemySpawnRate: 5
-  SpawnRateSpeedUp: 0.9
+  SpawnRateSpeedUp: 0.5
   SpawnRateStageTimer: 10
-  WeaponSpawnRate: 10
+  WeaponSpawnRate: 15
   PointsPerKill: 10
