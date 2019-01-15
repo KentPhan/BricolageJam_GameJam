@@ -34,7 +34,7 @@ namespace Assets
         // Update is called once per frame
         void Update()
         {
-            if (!CanKill)
+            if (!CanKill && GetComponent<Rigidbody2D>() != null)
                 m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
         }
 

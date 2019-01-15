@@ -97,7 +97,7 @@ namespace Assets
 
 
             // Weapon Spawner
-            if (m_CurrentEnemySpawnTimer <= 0)
+            if (m_CurrentWeaponSpawnTimer <= 0)
             {
                 Vector2 m_SpawnPosition = new Vector2(0, 0);
                 WeaponPieceScript m_newWeapon = Instantiate(WeaponPrefab, m_SpawnPosition, Quaternion.identity);
