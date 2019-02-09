@@ -16,29 +16,36 @@ namespace Assets
         [SerializeField]
         private float Speed = 2.0f;
         [SerializeField]
-        private WeaponStates m_WeaponState = WeaponStates.DORMANT;
+        private WeaponStates m_CurrentWeaponState = WeaponStates.DORMANT;
+
+        [SerializeField] private float m_MaxEnergy = 100;
+        [SerializeField] private float m_RechargeRate = 1.0f;
+
+        [SerializeField] [Range(0.0f, 1.0f)] private float m_MinimumAlpha = 0.1f;
+        private float m_CurrentEnergy;
         private Vector2 m_Direction;
 
 
         private Rigidbody2D m_RigidBody;
+        private MeshRenderer m_MeshRenderer;
 
 
 
         // Start is called before the first frame update
         void Start()
         {
-
+            m_MeshRenderer = GetComponent<MeshRenderer>();
             if (transform.parent.name == "WeaponShapes")
             {
-                m_WeaponState = WeaponStates.ACTIVE;
+                m_CurrentWeaponState = WeaponStates.ACTIVE;
                 Destroy(GetComponent<Rigidbody2D>());
             }
             else
             {
                 m_RigidBody = GetComponent<Rigidbody2D>();
-                m_WeaponState = WeaponStates.DORMANT;
+                m_CurrentWeaponState = WeaponStates.DORMANT;
             }
-
+            m_CurrentEnergy = m_MaxEnergy;
         }
 
         // Update is called once per frame
@@ -46,7 +53,7 @@ namespace Assets
         {
             if (GameManager.Instance.GetGameState() == GameStates.PLAY)
             {
-                switch (m_WeaponState)
+                switch (m_CurrentWeaponState)
                 {
                     case WeaponStates.DORMANT:
                         m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
@@ -57,16 +64,32 @@ namespace Assets
                         }
                         break;
                     case WeaponStates.RECHARGING:
+                        m_CurrentEnergy += Time.deltaTime * m_RechargeRate;
+
+                        if (m_CurrentEnergy >= m_MaxEnergy)
+                        {
+                            m_CurrentEnergy = m_MaxEnergy;
+                            m_CurrentWeaponState = WeaponStates.ACTIVE;
+                        }
+                        else
+                        {
+                            m_MeshRenderer.material.color = new Color(m_MeshRenderer.material.color.r, m_MeshRenderer.material.color.g, m_MeshRenderer.material.color.b, Mathf.Lerp(m_MinimumAlpha, 1.0f, m_CurrentEnergy / m_MaxEnergy));
+                        }
+
                         break;
                     case WeaponStates.ACTIVE:
+
+                        if (m_CurrentEnergy <= 0.0f)
+                        {
+                            //GetComponent<MeshRenderer>().al
+                            m_MeshRenderer.material.color = new Color(m_MeshRenderer.material.color.r, m_MeshRenderer.material.color.g, m_MeshRenderer.material.color.b, m_MinimumAlpha);
+                            m_CurrentWeaponState = WeaponStates.RECHARGING;
+                        }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                //if (!CanKill && GetComponent<Rigidbody2D>() != null)
-                //{
-
-                //}
             }
             else
             {
@@ -83,13 +106,18 @@ namespace Assets
         public void ActivateArms()
         {
             Destroy(GetComponent<Rigidbody2D>());
-            m_WeaponState = WeaponStates.ACTIVE;
+            m_CurrentWeaponState = WeaponStates.ACTIVE;
             this.gameObject.transform.SetParent(GameManager.Instance.GetPlayer().GetComponent<PlayerScript>().GetWeaponParents());
         }
 
         public bool CanKill()
         {
-            return m_WeaponState == WeaponStates.ACTIVE;
+            return m_CurrentWeaponState == WeaponStates.ACTIVE;
+        }
+
+        public void DecreaseEnergy(float i_Decrease)
+        {
+            m_CurrentEnergy -= i_Decrease;
         }
 
         public void OnCollisionEnter2D(Collision2D i_collider)
@@ -100,7 +128,7 @@ namespace Assets
                 if (i_collider.gameObject.CompareTag("Weapon"))
                 {
                     WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                    if (l_weapon.m_WeaponState == WeaponStates.DORMANT)
+                    if (l_weapon.m_CurrentWeaponState == WeaponStates.DORMANT)
                     {
                         l_weapon.ActivateArms();
                     }
@@ -112,7 +140,7 @@ namespace Assets
             }
             else
             {
-                
+
             }
         }
     }

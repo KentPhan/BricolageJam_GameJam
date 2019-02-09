@@ -5,7 +5,7 @@ namespace Assets
     public class BasicEnemyScript : MonoBehaviour
     {
         [SerializeField] private ParticleSystem ParticleDeathPrefab;
-
+        [SerializeField] private float m_EnergyToKill = 10.0f;
         [SerializeField]
         private float m_Speed;
 
@@ -45,8 +45,10 @@ namespace Assets
         {
             if (i_collider.gameObject.CompareTag("Weapon"))
             {
-                if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill())
+                WeaponPieceScript l_Weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
+                if (l_Weapon.CanKill())
                 {
+                    l_Weapon.DecreaseEnergy(m_EnergyToKill);
                     GameManager.Instance.AddToScore();
                     Die();
                 }

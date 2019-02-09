@@ -119,6 +119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 1
+  m_CurrentWeaponState: 0
+  m_MaxEnergy: 20
+  m_RechargeRate: 1
+  m_MinimumAlpha: 0.1
 --- !u!50 &5057603809703155621
 Rigidbody2D:
   serializedVersion: 4
