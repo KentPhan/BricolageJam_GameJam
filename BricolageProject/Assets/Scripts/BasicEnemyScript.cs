@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Assets
 {
@@ -45,7 +45,7 @@ namespace Assets
         {
             if (i_collider.gameObject.CompareTag("Weapon"))
             {
-                if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill)
+                if (i_collider.gameObject.GetComponent<WeaponPieceScript>().CanKill())
                 {
                     GameManager.Instance.AddToScore();
                     Die();

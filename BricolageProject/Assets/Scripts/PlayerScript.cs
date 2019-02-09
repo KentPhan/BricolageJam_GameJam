@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Assets
 {
@@ -63,6 +63,18 @@ namespace Assets
         {
             Instantiate(ParticleDeathPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+        }
+
+        public void OnCollisionEnter2D(Collision2D i_collider)
+        {
+            if (i_collider.gameObject.CompareTag("Weapon"))
+            {
+                WeaponPieceScript l_Weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
+                if (l_Weapon != null && !l_Weapon.CanKill())
+                {
+                    l_Weapon.ActivateArms();
+                }
+            }
         }
     }
 }

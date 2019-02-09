@@ -174,11 +174,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1078675947}
     m_Modifications:
-    - target: {fileID: 3182053520964696129, guid: 14b5408845b9fca4692194f5d05caf94,
-        type: 3}
-      propertyPath: m_Name
-      value: WeaponCube
-      objectReference: {fileID: 0}
     - target: {fileID: 6570898606268107779, guid: 14b5408845b9fca4692194f5d05caf94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -233,6 +228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182053520964696129, guid: 14b5408845b9fca4692194f5d05caf94,
+        type: 3}
+      propertyPath: m_Name
+      value: WeaponCube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14b5408845b9fca4692194f5d05caf94, type: 3}

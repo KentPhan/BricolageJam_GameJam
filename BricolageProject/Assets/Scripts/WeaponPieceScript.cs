@@ -1,17 +1,27 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 
 namespace Assets
 {
+    public enum WeaponStates
+    {
+        DORMANT,
+        RECHARGING,
+        ACTIVE
+    }
+
     public class WeaponPieceScript : MonoBehaviour
     {
-        public bool CanKill { get; private set; }
 
         [SerializeField]
         private float Speed = 2.0f;
+        [SerializeField]
+        private WeaponStates m_WeaponState = WeaponStates.DORMANT;
         private Vector2 m_Direction;
 
 
         private Rigidbody2D m_RigidBody;
+
 
 
         // Start is called before the first frame update
@@ -20,13 +30,13 @@ namespace Assets
 
             if (transform.parent.name == "WeaponShapes")
             {
-                CanKill = true;
+                m_WeaponState = WeaponStates.ACTIVE;
                 Destroy(GetComponent<Rigidbody2D>());
             }
             else
             {
                 m_RigidBody = GetComponent<Rigidbody2D>();
-                CanKill = false;
+                m_WeaponState = WeaponStates.DORMANT;
             }
 
         }
@@ -36,15 +46,27 @@ namespace Assets
         {
             if (GameManager.Instance.GetGameState() == GameStates.PLAY)
             {
-                if (!CanKill && GetComponent<Rigidbody2D>() != null)
+                switch (m_WeaponState)
                 {
-                    m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
+                    case WeaponStates.DORMANT:
+                        m_RigidBody.MovePosition(m_RigidBody.position + m_Direction * Speed * Time.deltaTime);
 
-                    if (GameManager.Instance.IsOutsideBoundaries(m_RigidBody.position))
-                    {
-                        Destroy(this.gameObject);
-                    }
+                        if (GameManager.Instance.IsOutsideBoundaries(m_RigidBody.position))
+                        {
+                            Destroy(this.gameObject);
+                        }
+                        break;
+                    case WeaponStates.RECHARGING:
+                        break;
+                    case WeaponStates.ACTIVE:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
+                //if (!CanKill && GetComponent<Rigidbody2D>() != null)
+                //{
+
+                //}
             }
             else
             {
@@ -61,7 +83,13 @@ namespace Assets
         public void ActivateArms()
         {
             Destroy(GetComponent<Rigidbody2D>());
-            CanKill = true;
+            m_WeaponState = WeaponStates.ACTIVE;
+            this.gameObject.transform.SetParent(GameManager.Instance.GetPlayer().GetComponent<PlayerScript>().GetWeaponParents());
+        }
+
+        public bool CanKill()
+        {
+            return m_WeaponState == WeaponStates.ACTIVE;
         }
 
         public void OnCollisionEnter2D(Collision2D i_collider)
@@ -72,15 +100,21 @@ namespace Assets
                 if (i_collider.gameObject.CompareTag("Weapon"))
                 {
                     WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                    if (!l_weapon.CanKill)
+                    if (l_weapon.m_WeaponState == WeaponStates.DORMANT)
                     {
                         l_weapon.ActivateArms();
-                        l_weapon.gameObject.transform.SetParent(GameManager.Instance.GetPlayer().GetComponent<PlayerScript>().GetWeaponParents());
                     }
                 }
                 else if (i_collider.gameObject.CompareTag("Player"))
                 {
 
+                }
+            }
+            else
+            {
+                if (i_collider.gameObject.CompareTag("Player"))
+                {
+                    Debug.Log("Yasss");
                 }
             }
         }
