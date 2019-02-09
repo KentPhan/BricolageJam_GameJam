@@ -112,10 +112,7 @@ namespace Assets
             }
             else
             {
-                if (i_collider.gameObject.CompareTag("Player"))
-                {
-                    Debug.Log("Yasss");
-                }
+                
             }
         }
     }
