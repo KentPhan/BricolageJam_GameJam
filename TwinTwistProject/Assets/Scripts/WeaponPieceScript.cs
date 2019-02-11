@@ -81,7 +81,6 @@ namespace Assets
 
                         if (m_CurrentEnergy <= 0.0f)
                         {
-                            //GetComponent<MeshRenderer>().al
                             m_MeshRenderer.material.color = new Color(m_MeshRenderer.material.color.r, m_MeshRenderer.material.color.g, m_MeshRenderer.material.color.b, m_MinimumAlpha);
                             m_CurrentWeaponState = WeaponStates.RECHARGING;
                         }

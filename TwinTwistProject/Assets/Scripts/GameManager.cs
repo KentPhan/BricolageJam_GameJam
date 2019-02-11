@@ -1,4 +1,4 @@
-﻿using Assets.Scripts;
+using Assets.Scripts;
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,7 +21,7 @@ namespace Assets
         [SerializeField] private PlayerScript PlayerPrefab;
         [SerializeField] private GameObject PlayerSpawn;
         [SerializeField] private BasicEnemyScript EnemyPrefab;
-        [SerializeField] private WeaponPieceScript WeaponPrefab;
+        [SerializeField] private WeaponPieceScript[] WeaponPrefabs;
 
         // Enemy Stuff
         [SerializeField] private float InitialEnemySpawnRate = 5.0f;
@@ -76,6 +76,8 @@ namespace Assets
 
             // Weapon Stuff
             m_CurrentWeaponSpawnTimer = WeaponSpawnRate;
+            if (WeaponPrefabs == null)
+                WeaponPrefabs = new WeaponPieceScript[5];
 
             // GameState
             CanvasManager.Instance.DisplayStart();
@@ -149,7 +151,9 @@ namespace Assets
             {
                 Tuple<Vector2, Vector2> l_randShit = GetRandomSpawnOutsideOfBoundary();
                 Vector2 m_SpawnPosition = l_randShit.Item1;
-                WeaponPieceScript m_newWeapon = Instantiate(WeaponPrefab, m_SpawnPosition, Quaternion.identity);
+
+                WeaponPieceScript l_WeaponPrefab = WeaponPrefabs[Random.Range(0, WeaponPrefabs.Length)];
+                WeaponPieceScript m_newWeapon = Instantiate(l_WeaponPrefab, m_SpawnPosition, Quaternion.identity);
                 m_newWeapon.transform.SetParent(this.transform);
                 m_newWeapon.SetMawDirectionBaby(l_randShit.Item2);
 
