@@ -63,7 +63,7 @@ namespace Assets
         public void Die()
         {
             Instantiate(ParticleDeathPrefab, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            Destroy(m_Parent);
         }
 
         public void OnCollisionEnter2D(Collision2D i_collider)
