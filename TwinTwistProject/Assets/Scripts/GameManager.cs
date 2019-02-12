@@ -38,6 +38,13 @@ namespace Assets
         [SerializeField] private float WeaponSpawnRate = 10.0f;
         private float m_CurrentWeaponSpawnTimer;
 
+        // Sound Shit
+        [SerializeField] private AudioSource[] m_ExplosionAudioSources;
+        [SerializeField] private AudioClip[] m_ExplosionAudioClips;
+        [SerializeField] private float m_ExplosionVolume = 1.0f;
+        [SerializeField] private AudioClip m_ShootClip;
+        [SerializeField] private float m_ShootVolume = 0.2f;
+
         // Score Shit
         [SerializeField] private int PointsPerKill;
         private int m_CurrentScore;
@@ -232,6 +239,16 @@ namespace Assets
         public GameStates GetGameState()
         {
             return m_CurrentGameState;
+        }
+
+        public void PlayRandomExplosionClip(Vector3 i_Position)
+        {
+            AudioSource.PlayClipAtPoint(m_ExplosionAudioClips[Random.Range(0, m_ExplosionAudioClips.Length)], i_Position, m_ExplosionVolume);
+        }
+
+        public void PlayShootClip()
+        {
+            AudioSource.PlayClipAtPoint(m_ShootClip, m_CurrentPlayer.transform.position, m_ShootVolume);
         }
 
         public void AddToScore()

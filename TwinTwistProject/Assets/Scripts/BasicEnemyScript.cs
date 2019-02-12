@@ -57,6 +57,7 @@ namespace Assets
 
         public void Die()
         {
+            GameManager.Instance.PlayRandomExplosionClip(transform.position);
             Instantiate(ParticleDeathPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }

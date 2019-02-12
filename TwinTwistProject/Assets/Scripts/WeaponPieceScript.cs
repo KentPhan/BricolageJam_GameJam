@@ -122,6 +122,7 @@ namespace Assets
                                 GameObject l_bullet = Instantiate(m_BulletPrefab, transform.position, transform.rotation);
                                 l_bullet.GetComponent<PlayerBulletComponent>().LaunchBullet(transform.up);
                                 l_bullet.transform.SetParent(GameManager.Instance.transform);
+                                GameManager.Instance.PlayShootClip();
                             }
                             m_CurrentShootTimer -= Time.deltaTime;
                         }
