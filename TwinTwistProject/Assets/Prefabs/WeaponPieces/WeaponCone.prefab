@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3182053520964696129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9, y: 9, z: 9}
+  m_LocalScale: {x: 7, y: 10, z: 9}
   m_Children:
   - {fileID: 704925581043690914}
   - {fileID: 4827273710159300524}
@@ -57,10 +57,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   m_CurrentWeaponState: 0
-  m_MaxEnergy: 30
+  m_MaxEnergy: 10
   m_RechargeRate: 2
   m_MinimumAlpha: 0.2
   m_ChargeColorTint: {r: 1, g: 0.47450984, b: 0.51321965, a: 0}
+  m_BulletPrefab: {fileID: 8023574524572064037, guid: 18137c0a990da71458e28819a017e047,
+    type: 3}
+  m_ShootsBullets: 1
+  m_ShootRate: 1
 --- !u!50 &5057603809703155621
 Rigidbody2D:
   serializedVersion: 4

@@ -24,6 +24,12 @@ namespace Assets
 
         [SerializeField] [Range(0.0f, 1.0f)] private float m_MinimumAlpha = 0.1f;
         [SerializeField] private Color m_ChargeColorTint;
+
+        [SerializeField] private GameObject m_BulletPrefab;
+        [SerializeField] private bool m_ShootsBullets = false;
+        [SerializeField] private float m_ShootRate = 5.0f;
+        private float m_CurrentShootTimer;
+
         private Color m_OriginalColor;
         private float m_CurrentEnergy;
         private Vector2 m_Direction;
@@ -48,6 +54,8 @@ namespace Assets
         {
             m_MeshRenderers = GetComponentsInChildren<MeshRenderer>();
             m_Colliders = GetComponentsInChildren<Collider2D>();
+
+            m_CurrentShootTimer = m_ShootRate;
 
             if (transform.parent.name == "WeaponShapes")
             {
@@ -83,8 +91,6 @@ namespace Assets
                     case WeaponStates.RECHARGING:
                         m_CurrentEnergy += Time.deltaTime * m_RechargeRate;
 
-                        Debug.Log(m_CurrentEnergy);
-
                         if (m_CurrentEnergy >= m_MaxEnergy)
                         {
                             m_CurrentEnergy = m_MaxEnergy;
@@ -106,6 +112,18 @@ namespace Assets
                         {
                             GoToChargeLayer();
                             m_CurrentWeaponState = WeaponStates.RECHARGING;
+                        }
+
+                        if (m_ShootsBullets)
+                        {
+                            if (m_CurrentShootTimer <= 0)
+                            {
+                                m_CurrentShootTimer = m_ShootRate;
+                                GameObject l_bullet = Instantiate(m_BulletPrefab, transform.position, transform.rotation);
+                                l_bullet.GetComponent<PlayerBulletComponent>().LaunchBullet(transform.up);
+                                l_bullet.transform.SetParent(GameManager.Instance.transform);
+                            }
+                            m_CurrentShootTimer -= Time.deltaTime;
                         }
 
                         break;

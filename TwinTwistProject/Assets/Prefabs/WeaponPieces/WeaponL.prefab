@@ -58,10 +58,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   m_CurrentWeaponState: 0
-  m_MaxEnergy: 30
+  m_MaxEnergy: 50
   m_RechargeRate: 2
   m_MinimumAlpha: 0.2
   m_ChargeColorTint: {r: 1, g: 0.47450984, b: 0.51321965, a: 0}
+  m_BulletPrefab: {fileID: 0}
+  m_ShootsBullets: 0
+  m_ShootRate: 5
 --- !u!50 &5057603809703155621
 Rigidbody2D:
   serializedVersion: 4

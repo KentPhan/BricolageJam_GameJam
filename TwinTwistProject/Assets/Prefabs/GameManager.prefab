@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 3273834920400237284, guid: cf255735812f6f24382eb783a5643b5c, type: 3}
   - {fileID: 3273834920400237284, guid: 655ee9a05c7389f49b37f5c4dbc85935, type: 3}
   InitialEnemySpawnRate: 5
-  SpawnRateSpeedUp: 0.5
+  SpawnRateSpeedUp: 0.8
   SpawnRateStageTimer: 10
-  WeaponSpawnRate: 5
+  WeaponSpawnRate: 6
   PointsPerKill: 10

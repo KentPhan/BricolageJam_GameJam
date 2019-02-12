@@ -45,17 +45,7 @@ namespace Assets
         {
             if (i_collider.gameObject.CompareTag("Weapon"))
             {
-                //WeaponPieceScript l_Weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                //if (l_Weapon == null)
-                //    l_Weapon = i_collider.gameObject.GetComponentInParent<WeaponPieceScript>();
-                //if (l_Weapon)
-                //    Debug.LogError("Could not find weapon script");
-                //if (l_Weapon.CanKill())
-                //{
-                //    l_Weapon.DecreaseEnergy(m_EnergyToKill);
-                //    GameManager.Instance.AddToScore();
-                //    Die();
-                //}
+
 
             }
             else if (i_collider.gameObject.CompareTag("Player"))
