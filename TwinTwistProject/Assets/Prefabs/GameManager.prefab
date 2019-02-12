@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TheCamera: {fileID: 0}
-  PlayerPrefab: {fileID: 8623608253014324942, guid: 09ee37793684773448f21f31d0c8e11f,
+  PlayerPrefab: {fileID: 8768608661320468352, guid: 09ee37793684773448f21f31d0c8e11f,
     type: 3}
   PlayerSpawn: {fileID: 0}
   EnemyPrefab: {fileID: 8773443549902467794, guid: b8a8f9ffe89614f4fac33a89d1f901d4,
@@ -55,5 +55,5 @@ MonoBehaviour:
   InitialEnemySpawnRate: 5
   SpawnRateSpeedUp: 0.5
   SpawnRateStageTimer: 10
-  WeaponSpawnRate: 10
+  WeaponSpawnRate: 1
   PointsPerKill: 10

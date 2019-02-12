@@ -10,6 +10,7 @@ namespace Assets
         [SerializeField] private float m_RotationSpeed = 5;
         [SerializeField] private bool m_Invert = true;
         [SerializeField] private GameObject m_WeaponCenter;
+        [SerializeField] private GameObject m_Parent;
 
         private Rigidbody2D m_RigidBody;
 
@@ -39,7 +40,7 @@ namespace Assets
                 if (l_newPosition.y < (m_Boundaries.y * -1) || l_newPosition.y > (m_Boundaries.y))
                     l_newPosition.y = m_RigidBody.position.y;
 
-                m_RigidBody.position = l_newPosition;
+                m_Parent.transform.position = l_newPosition;
 
 
                 // Player Weapon Rotation
@@ -78,3 +79,4 @@ namespace Assets
         }
     }
 }
+

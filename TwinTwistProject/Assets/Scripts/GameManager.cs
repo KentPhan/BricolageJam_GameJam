@@ -18,7 +18,7 @@ namespace Assets
         [SerializeField] private Camera TheCamera;
 
         // Prefabs
-        [SerializeField] private PlayerScript PlayerPrefab;
+        [SerializeField] private GameObject PlayerPrefab;
         [SerializeField] private GameObject PlayerSpawn;
         [SerializeField] private BasicEnemyScript EnemyPrefab;
         [SerializeField] private WeaponPieceScript[] WeaponPrefabs;
@@ -45,7 +45,7 @@ namespace Assets
 
         public static GameManager Instance;
 
-        private PlayerScript m_CurrentPlayer;
+        private GameObject m_CurrentPlayer;
         private GameStates m_CurrentGameState;
 
         private Vector2 m_Boundary;
@@ -166,7 +166,7 @@ namespace Assets
         {
             if (m_CurrentPlayer == null)
                 return null;
-            return m_CurrentPlayer.gameObject;
+            return m_CurrentPlayer.GetComponentInChildren<PlayerScript>().gameObject;
         }
 
         public Vector2 GetBoundaries()

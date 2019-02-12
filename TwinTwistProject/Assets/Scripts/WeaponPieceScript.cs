@@ -21,20 +21,34 @@ namespace Assets
         [SerializeField] private float m_MaxEnergy = 100;
         [SerializeField] private float m_RechargeRate = 1.0f;
 
+
         [SerializeField] [Range(0.0f, 1.0f)] private float m_MinimumAlpha = 0.1f;
+        [SerializeField] private Color m_ChargeColorTint;
+        private Color m_OriginalColor;
         private float m_CurrentEnergy;
         private Vector2 m_Direction;
 
 
         private Rigidbody2D m_RigidBody;
-        private MeshRenderer m_MeshRenderer;
+        private MeshRenderer[] m_MeshRenderers;
+        private Collider2D[] m_Colliders;
 
+        // Store
+        private int m_WeaponLayerMask;
+        private int m_WeaponLayerCooldownMask;
 
+        void Awake()
+        {
+            m_WeaponLayerMask = LayerMask.NameToLayer("Weapon");
+            m_WeaponLayerCooldownMask = LayerMask.NameToLayer("WeaponCooldown");
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            m_MeshRenderer = GetComponent<MeshRenderer>();
+            m_MeshRenderers = GetComponentsInChildren<MeshRenderer>();
+            m_Colliders = GetComponentsInChildren<Collider2D>();
+
             if (transform.parent.name == "WeaponShapes")
             {
                 m_CurrentWeaponState = WeaponStates.ACTIVE;
@@ -45,6 +59,9 @@ namespace Assets
                 m_RigidBody = GetComponent<Rigidbody2D>();
                 m_CurrentWeaponState = WeaponStates.DORMANT;
             }
+
+            m_OriginalColor = GetComponentInChildren<MeshRenderer>().material.color;
+
             m_CurrentEnergy = m_MaxEnergy;
         }
 
@@ -70,10 +87,14 @@ namespace Assets
                         {
                             m_CurrentEnergy = m_MaxEnergy;
                             m_CurrentWeaponState = WeaponStates.ACTIVE;
+                            GoToKillLayer();
                         }
                         else
                         {
-                            m_MeshRenderer.material.color = new Color(m_MeshRenderer.material.color.r, m_MeshRenderer.material.color.g, m_MeshRenderer.material.color.b, Mathf.Lerp(m_MinimumAlpha, 1.0f, m_CurrentEnergy / m_MaxEnergy));
+                            foreach (MeshRenderer l_Mesh in m_MeshRenderers)
+                            {
+                                l_Mesh.material.color = new Color(l_Mesh.material.color.r, l_Mesh.material.color.g, l_Mesh.material.color.b, Mathf.Lerp(m_MinimumAlpha, 1.0f, m_CurrentEnergy / m_MaxEnergy)) * m_ChargeColorTint;
+                            }
                         }
 
                         break;
@@ -81,7 +102,12 @@ namespace Assets
 
                         if (m_CurrentEnergy <= 0.0f)
                         {
-                            m_MeshRenderer.material.color = new Color(m_MeshRenderer.material.color.r, m_MeshRenderer.material.color.g, m_MeshRenderer.material.color.b, m_MinimumAlpha);
+                            foreach (MeshRenderer l_Mesh in m_MeshRenderers)
+                            {
+                                l_Mesh.material.color = m_OriginalColor;
+
+                            }
+                            GoToChargeLayer();
                             m_CurrentWeaponState = WeaponStates.RECHARGING;
                         }
 
@@ -99,6 +125,21 @@ namespace Assets
         public void SetMawDirectionBaby(Vector2 i_Direction)
         {
             m_Direction = i_Direction;
+        }
+        private void GoToKillLayer()
+        {
+            foreach (Collider2D l_Collider in m_Colliders)
+            {
+                l_Collider.gameObject.layer = m_WeaponLayerMask;
+            }
+        }
+
+        private void GoToChargeLayer()
+        {
+            foreach (Collider2D l_Collider in m_Colliders)
+            {
+                l_Collider.gameObject.layer = m_WeaponLayerCooldownMask;
+            }
         }
 
 
@@ -119,6 +160,11 @@ namespace Assets
             m_CurrentEnergy -= i_Decrease;
         }
 
+        public WeaponStates GetWeaponState()
+        {
+            return m_CurrentWeaponState;
+        }
+
         public void OnCollisionEnter2D(Collision2D i_collider)
         {
 
@@ -126,15 +172,24 @@ namespace Assets
             {
                 if (i_collider.gameObject.CompareTag("Weapon"))
                 {
-                    WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                    if (l_weapon.m_CurrentWeaponState == WeaponStates.DORMANT)
-                    {
-                        l_weapon.ActivateArms();
-                    }
+                    Debug.Log("1");
+                    //WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
+                    //if (l_weapon.m_CurrentWeaponState == WeaponStates.DORMANT)
+                    //{
+                    //    l_weapon.ActivateArms();
+                    //}
                 }
                 else if (i_collider.gameObject.CompareTag("Player"))
                 {
-
+                    Debug.Log("2");
+                }
+                else if (i_collider.gameObject.CompareTag("Enemy"))
+                {
+                    Debug.Log("3");
+                    //if (CanKill())
+                    //{
+                    //    i_collider.gameObject.GetComponent<BasicEnemyScript>().Die();
+                    //}
                 }
             }
             else

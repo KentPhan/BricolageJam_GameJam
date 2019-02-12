@@ -242,7 +242,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -735,6 +735,11 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2189626148869517631, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67b9c98ae07d4ed468fcd4f9c5a4cbf6, type: 3}
 --- !u!1001 &6837480580480301702
@@ -875,9 +880,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
         type: 3}
-      propertyPath: WeaponPrefabs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: TheCamera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
         type: 3}
       propertyPath: PlayerSpawn
@@ -885,35 +890,8 @@ PrefabInstance:
       objectReference: {fileID: 745693260}
     - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
         type: 3}
-      propertyPath: WidthBoundary
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
-        type: 3}
-      propertyPath: HeightBoundary
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
-        type: 3}
-      propertyPath: TheCamera
-      value: 
-      objectReference: {fileID: 519420031}
-    - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
-        type: 3}
-      propertyPath: WeaponPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 3273834920400237284, guid: 14b5408845b9fca4692194f5d05caf94,
-        type: 3}
-    - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
-        type: 3}
-      propertyPath: WeaponPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 3273834920400237284, guid: a71d42a494bbf4a41a88ce47b29aa985,
-        type: 3}
-    - target: {fileID: 7837150744473990658, guid: 28fa6d30b21e70049953f386ca448963,
-        type: 3}
       propertyPath: WeaponSpawnRate
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28fa6d30b21e70049953f386ca448963, type: 3}
