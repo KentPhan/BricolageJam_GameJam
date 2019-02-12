@@ -95,7 +95,7 @@ namespace Assets
                         {
                             foreach (MeshRenderer l_Mesh in m_MeshRenderers)
                             {
-                                l_Mesh.material.color = new Color(l_Mesh.material.color.r, l_Mesh.material.color.g, l_Mesh.material.color.b, Mathf.Lerp(m_MinimumAlpha, 1.0f, m_CurrentEnergy / m_MaxEnergy)) * m_ChargeColorTint;
+                                l_Mesh.material.color = new Color(m_ChargeColorTint.r, m_ChargeColorTint.g, m_ChargeColorTint.b, Mathf.Lerp(m_MinimumAlpha, 1.0f, m_CurrentEnergy / m_MaxEnergy));
                             }
                         }
 

@@ -154,7 +154,7 @@ MonoBehaviour:
   m_MaxEnergy: 5
   m_RechargeRate: 1
   m_MinimumAlpha: 0.1
-  m_ChargeColorTint: {r: 0, g: 0, b: 0, a: 0}
+  m_ChargeColorTint: {r: 1, g: 0.47450984, b: 0.51321965, a: 0}
 --- !u!50 &5057603809703155621
 Rigidbody2D:
   serializedVersion: 4
