@@ -83,6 +83,8 @@ namespace Assets
                     case WeaponStates.RECHARGING:
                         m_CurrentEnergy += Time.deltaTime * m_RechargeRate;
 
+                        Debug.Log(m_CurrentEnergy);
+
                         if (m_CurrentEnergy >= m_MaxEnergy)
                         {
                             m_CurrentEnergy = m_MaxEnergy;
@@ -102,11 +104,6 @@ namespace Assets
 
                         if (m_CurrentEnergy <= 0.0f)
                         {
-                            foreach (MeshRenderer l_Mesh in m_MeshRenderers)
-                            {
-                                l_Mesh.material.color = m_OriginalColor;
-
-                            }
                             GoToChargeLayer();
                             m_CurrentWeaponState = WeaponStates.RECHARGING;
                         }
@@ -131,6 +128,11 @@ namespace Assets
             foreach (Collider2D l_Collider in m_Colliders)
             {
                 l_Collider.gameObject.layer = m_WeaponLayerMask;
+            }
+
+            foreach (MeshRenderer l_Mesh in m_MeshRenderers)
+            {
+                l_Mesh.material.color = m_OriginalColor;
             }
         }
 
@@ -163,39 +165,6 @@ namespace Assets
         public WeaponStates GetWeaponState()
         {
             return m_CurrentWeaponState;
-        }
-
-        public void OnCollisionEnter2D(Collision2D i_collider)
-        {
-
-            if (this.transform.parent.name == "WeaponShapes")
-            {
-                if (i_collider.gameObject.CompareTag("Weapon"))
-                {
-                    Debug.Log("1");
-                    //WeaponPieceScript l_weapon = i_collider.gameObject.GetComponent<WeaponPieceScript>();
-                    //if (l_weapon.m_CurrentWeaponState == WeaponStates.DORMANT)
-                    //{
-                    //    l_weapon.ActivateArms();
-                    //}
-                }
-                else if (i_collider.gameObject.CompareTag("Player"))
-                {
-                    Debug.Log("2");
-                }
-                else if (i_collider.gameObject.CompareTag("Enemy"))
-                {
-                    Debug.Log("3");
-                    //if (CanKill())
-                    //{
-                    //    i_collider.gameObject.GetComponent<BasicEnemyScript>().Die();
-                    //}
-                }
-            }
-            else
-            {
-
-            }
         }
     }
 }
